@@ -1,13 +1,12 @@
 import express from "express";
-import { getAllLevel, getDetailLevel, createLevel, updateLevel, deleteLevel } from "../controller/levelCont.js";
+import controller from "../controller/index.js";
 
-const level = express.Router();
+const route = express.Router();
 
-level.get('/level', getAllLevel);
-level.get('/:id_level', getDetailLevel);
-level.post('/level', createLevel);
-level.put('/:id_level', updateLevel);
-level.delete('/:id_level', deleteLevel);
+route.get("/level", controller.level.getAllLevel);
+route.get("/level/:id_level", controller.level.getDetailLevel);
+route.post("/level", controller.level.createLevel);
+route.put("/level/:id_level", controller.level.updateLevel);
+route.delete("/level/:id_level", controller.level.deleteLevel);
 
-
-export default level;
+export default route;

@@ -1,10 +1,9 @@
 import { Sequelize } from "sequelize";
-import db from "../config/database";
-import Level from "./LevelModel";
+import db from "../config/database.js";
+import Level from "./LevelModel.js";
 
 const { DataTypes } = Sequelize;
 
-//tabel tanpa foreign key
 const User = db.define('user', 
 {
     //field
@@ -33,8 +32,8 @@ const User = db.define('user',
     timestamps: false
 });
 
-Level.hasOne(User, { foreignKey: 'id_level'});
-Level.belongsTo(User, { foreignKey: 'id_level'});
+User.hasOne(Level, { foreignKey: 'id_level'});
+User.belongsTo(Level, { foreignKey: 'id_level'});
 
 User.removeAttribute('id');
 export default User;

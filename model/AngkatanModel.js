@@ -3,20 +3,23 @@ import db from "../config/database.js";
 
 const { DataTypes } = Sequelize;
 
-//tabel tanpa foreign key
-const Level = db.define('level_user',{
-    id_level:{
+const Angkatan = db.define('angkatan', 
+{
+    //field
+    id_angkatan:{
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true
     },
-    peran:{
-        type: DataTypes.STRING
+    tahun_angkatan:{
+        type: DataTypes.STRING,
     }
-},{
+}, 
+{
+    //properti sequelize
     freezeTableName: true,
     timestamps: false
 });
 
-Level.removeAttribute('id');
-export default Level;
+Angkatan.removeAttribute('id');
+export default Angkatan;

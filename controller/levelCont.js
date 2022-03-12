@@ -1,11 +1,11 @@
-import Level from "../model/LevelModel.js";
-import {uuid} from "uuidv4";
+import model from "../model/index.js";
+import { v4 as uuidv4 } from 'uuid';
 
-// const controller = {};
+const controller = {};
 
-export const getAllLevel = async function (req, res){
+controller.getAllLevel = async function (req, res){
     try {
-        let level = await Level.findAll();
+        let level = await model.level.findAll();
             if(level.length > 0){
                 res.status(200).json({
                     message: 'Data List Level Ditemukan',
@@ -26,9 +26,9 @@ export const getAllLevel = async function (req, res){
 
 }
 
-export const getDetailLevel = async function (req, res){
+controller.getDetailLevel = async function (req, res){
     try {
-        let level = await Level.findOne({
+        let level = await model.level.findOne({
             where: {
                 id_level : req.params.id_level
             }
@@ -53,17 +53,17 @@ export const getDetailLevel = async function (req, res){
     }
 }
 
-export const createLevel = async function (req, res){
+controller.createLevel = async function (req, res){
     try {
         const data = {
-            id_level : uuid(),
-            peran : req.body.peran
+            id_level: uuidv4(),
+            peran: req.body.peran
         }
     
-        let level = await Level.create(data)
+        let level = await model.level.create(data)
         res.status(201).json({
             message: "Berhasil Membuat Data Level",
-            data : level
+            data: level
         })
         
     } catch (error) {
@@ -72,17 +72,15 @@ export const createLevel = async function (req, res){
         })
         
     }
-    
-
 }
 
-export const updateLevel = async function (req, res){
+controller.updateLevel = async function (req, res){
     try {
         const data = {
-            peran : req.body.peran
+            peran: req.body.peran
         }
     
-        let level = await Level.update(data, {
+        let level = await model.level.update(data, {
             where: {
                 id_level: req.params.id_level
             }
@@ -99,11 +97,11 @@ export const updateLevel = async function (req, res){
     }
 }
 
-export const deleteLevel = async function (req, res){
+controller.deleteLevel = async function (req, res){
     try {
-        let level = await Level.destroy({
+        let level = await model.level.destroy({
             where: {
-                id_level : req.params.id_level
+                id_level: req.params.id_level
             }
         })
 
@@ -117,3 +115,5 @@ export const deleteLevel = async function (req, res){
         
     }
 }
+
+export default controller;
