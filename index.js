@@ -9,6 +9,9 @@ import authRouter from "./routes/authRouter.js";
 import angkatanRouter from "./routes/angkatanRouter.js";
 import jurusanRouter from "./routes/jurusanRouter.js";
 import kelasRouter from "./routes/kelasRouter.js";
+import siswaRouter from "./routes/siswaRouter.js";
+import adminRouter from "./routes/adminRouter.js";
+import ownerRouter from "./routes/ownerRouter.js";
 
 
 const app = express();
@@ -34,6 +37,9 @@ app.use('/', authRouter);
 app.use('/', angkatanRouter);
 app.use('/', jurusanRouter);
 app.use('/', kelasRouter);
+app.use('/', siswaRouter);
+app.use('/', adminRouter);
+app.use('/', ownerRouter);
 
 
 app.listen(port, () => console.log(`Server Running at ${port}`));
