@@ -12,18 +12,19 @@ controller.getAllUser = async function(req, res){
                 required: true
             }
         });
-            if(user.length > 0){
-                res.status(200).json({
-                    message: 'Data List User Ditemukan',
-                    data: user
-                })
-
-            }else{
-                res.status(200).json({
-                    message: 'Tidak Ada Data',
-                    data: []
-                })
-            }
+        if(user.length > 0){
+            res.status(200).json({
+                message: 'Data List User Ditemukan',
+                data: user
+            })
+            
+        }else{
+            res.status(200).json({
+                message: 'Tidak Ada Data',
+                data: []
+            })
+        }
+        // console.log(data);
     } catch (error) {
         res.status(404).json({
             message: error.message
@@ -42,7 +43,7 @@ controller.getUserDetail = async function(req, res){
                 id_user: req.params.id_user
             }
         });
-
+        
         // console.log(user.level_user.peran);
 
         if(user){
@@ -65,7 +66,7 @@ controller.getUserDetail = async function(req, res){
 }
 
 controller.createUser = async function(req, res){
-    const salt = await bcrypt.genSalt();
+    const salt = await bcrypt.genSaltSync(10);
     const password = req.body.password;
 
     const hashPassword = await bcrypt.hash(password, salt);
@@ -79,10 +80,18 @@ controller.createUser = async function(req, res){
             status: req.body.status,
         }
 
+        // console.log(req.body);
+
         let user = await model.user.create(data);
-        res.status(201).json({
-            message: "Berhasil Menambahkan Data User",
-        })
+        if(user){
+            res.status(201).json({
+                message: "Berhasil Menambahkan Data User",
+            })
+        } else {
+            res.status(201).json({
+                message: "Gagal",
+            })
+        }
     } catch (error) {
         res.status(404).json({
             message: error.message
