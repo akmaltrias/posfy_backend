@@ -2,6 +2,8 @@ import express from "express";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import db from "./config/database.js";
+import dotenv from "dotenv";
+import cors from "cors";
 
 import levelRouter from "./routes/levelRouter.js";
 import userRouter from "./routes/userRouter.js";
@@ -12,7 +14,9 @@ import kelasRouter from "./routes/kelasRouter.js";
 import siswaRouter from "./routes/siswaRouter.js";
 import adminRouter from "./routes/adminRouter.js";
 import ownerRouter from "./routes/ownerRouter.js";
+import cookieParser from "cookie-parser";
 
+dotenv.config();
 
 const app = express();
 const port = 5000;
@@ -25,10 +29,12 @@ try {
 }
 
 // app.use(cors());
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(cookieParser())
 
 //deklarasi route
 app.use('/', levelRouter);
