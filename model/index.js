@@ -6,6 +6,8 @@ import Kelas from "./KelasModel.js";
 import Siswa from "./SiswaModel.js";
 import Admin from "./AdminModel.js";
 import Owner from "./OwnerModel.js";
+import Supplier from "./SupplierModel.js";
+import Transaksi from "./TransaksiModel.js";
 
 const model = {};
 
@@ -17,5 +19,7 @@ model.kelas = Kelas;
 model.siswa = Siswa;
 model.admin = Admin;
 model.owner = Owner;
+model.supplier = Supplier;
+model.transaksi = Transaksi;
 
 export default model;

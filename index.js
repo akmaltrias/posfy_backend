@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import db from "./config/database.js";
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import levelRouter from "./routes/levelRouter.js";
 import userRouter from "./routes/userRouter.js";
@@ -14,7 +15,8 @@ import kelasRouter from "./routes/kelasRouter.js";
 import siswaRouter from "./routes/siswaRouter.js";
 import adminRouter from "./routes/adminRouter.js";
 import ownerRouter from "./routes/ownerRouter.js";
-import cookieParser from "cookie-parser";
+import supplierRouter from "./routes/supplierRouter.js";
+import transaksiRouter from "./routes/transaksiRouter.js";
 
 dotenv.config();
 
@@ -22,7 +24,7 @@ const app = express();
 const port = 5000;
 
 try {
-    await db.authenticate();
+    db.authenticate();
     console.log('Database connected...');
 } catch (error) {
     console.error('Connection error:', error);
@@ -46,6 +48,8 @@ app.use('/', kelasRouter);
 app.use('/', siswaRouter);
 app.use('/', adminRouter);
 app.use('/', ownerRouter);
+app.use('/', supplierRouter);
+app.use('/', transaksiRouter);
 
 
 app.listen(port, () => console.log(`Server Running at ${port}`));
