@@ -8,6 +8,7 @@ import siswaCont from "./siswaCont.js";
 import adminCont from "./adminCont.js";
 import ownerCont from "./ownerCont.js";
 import supplierCont from "./supplierCont.js";
+import transaksiCont from "./transaksiCont.js";
 
 const controller = {};
 
@@ -21,5 +22,6 @@ controller.siswa = siswaCont;
 controller.admin = adminCont;
 controller.owner = ownerCont;
 controller.supplier = supplierCont;
+controller.transaksi = transaksiCont;
 
 export default controller;

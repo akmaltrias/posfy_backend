@@ -13,6 +13,7 @@ import siswaRouter from "./routes/siswaRouter.js";
 import adminRouter from "./routes/adminRouter.js";
 import ownerRouter from "./routes/ownerRouter.js";
 import supplierRouter from "./routes/supplierRouter.js";
+import transaksiRouter from "./routes/transaksiRouter.js";
 
 
 const app = express();
@@ -42,6 +43,7 @@ app.use('/', siswaRouter);
 app.use('/', adminRouter);
 app.use('/', ownerRouter);
 app.use('/', supplierRouter);
+app.use('/', transaksiRouter);
 
 
 app.listen(port, () => console.log(`Server Running at ${port}`));
