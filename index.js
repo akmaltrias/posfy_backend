@@ -12,13 +12,14 @@ import kelasRouter from "./routes/kelasRouter.js";
 import siswaRouter from "./routes/siswaRouter.js";
 import adminRouter from "./routes/adminRouter.js";
 import ownerRouter from "./routes/ownerRouter.js";
+import supplierRouter from "./routes/supplierRouter.js";
 
 
 const app = express();
 const port = 5000;
 
 try {
-    await db.authenticate();
+    db.authenticate();
     console.log('Database connected...');
 } catch (error) {
     console.error('Connection error:', error);
@@ -40,6 +41,7 @@ app.use('/', kelasRouter);
 app.use('/', siswaRouter);
 app.use('/', adminRouter);
 app.use('/', ownerRouter);
+app.use('/', supplierRouter);
 
 
 app.listen(port, () => console.log(`Server Running at ${port}`));
