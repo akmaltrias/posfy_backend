@@ -1,7 +1,7 @@
 import sequelize from "sequelize";
 import db from "../config/database.js";
 import model from "../model/index.js";
-import moment from "moment"
+import moment from "moment-timezone"
 
 const controller = {};
 
@@ -33,21 +33,21 @@ controller.createTransaksi = async function(req, res){
     try{
         const [result] = await db.query("SELECT id_transaksi() as id");
 
-    //    console.log(result[0].id)
+        const tanggal = moment().format()
 
         const data = {
             id_transaksi: result[0].id,
             id_user: req.body.id_user,
-            tgl_transaksi: moment().format("YYYY-MM-DD HH:mm:ss")
+            tgl_transaksi: tanggal
         }
         
-        console.log(data);
+        // console.log(tanggal);
 
-        // let transaksi = await model.transaksi.create(data);
+        let transaksi = await model.transaksi.create(data);
 
-        // res.status(201).json({
-        //     message: "Berhasil menambahkan data transaksi"
-        // });
+        res.status(201).json({
+            message: "Berhasil menambahkan data transaksi"
+        });
     }catch (error) {
         res.status(404).json({
             message: error.message
