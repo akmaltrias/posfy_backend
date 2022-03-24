@@ -17,6 +17,7 @@ import adminRouter from "./routes/adminRouter.js";
 import ownerRouter from "./routes/ownerRouter.js";
 import supplierRouter from "./routes/supplierRouter.js";
 import transaksiRouter from "./routes/transaksiRouter.js";
+import barangRouter from "./routes/barangRouter.js"
 
 dotenv.config();
 
@@ -30,13 +31,12 @@ try {
     console.error('Connection error:', error);
 }
 
-// app.use(cors());
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(cors({ credentials:true, origin:'http://localhost:3000' }));
+app.use(cookieParser());
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use(cookieParser())
 
 //deklarasi route
 app.use('/', levelRouter);
@@ -50,6 +50,6 @@ app.use('/', adminRouter);
 app.use('/', ownerRouter);
 app.use('/', supplierRouter);
 app.use('/', transaksiRouter);
-
+app.use('/', barangRouter);
 
 app.listen(port, () => console.log(`Server Running at ${port}`));

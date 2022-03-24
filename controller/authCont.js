@@ -39,15 +39,15 @@ controller.authLogin = async function(req, res){
                 expiresIn : "20s"
             })
 
-            res.cookie('refreshToken', refreshToken, {
+            res.cookie('refreshToken', refreshToken,{
                 httpOnly: true,
-                maxAge: 24 * 60 * 60 * 1000
+                maxAge: 24 * 60 * 60 * 1000,
             });
 
             if(result){
                 res.status(200).json({
                     message: "User Berhasil Login",
-                    accessToken: accessToken
+                    accessToken: accessToken,
                 })
             }else{
                 res.status(400).json({

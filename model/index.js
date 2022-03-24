@@ -8,6 +8,7 @@ import Admin from "./AdminModel.js";
 import Owner from "./OwnerModel.js";
 import Supplier from "./SupplierModel.js";
 import Transaksi from "./TransaksiModel.js";
+import Barang from "./BarangModel.js";
 
 const model = {};
 
@@ -21,5 +22,6 @@ model.admin = Admin;
 model.owner = Owner;
 model.supplier = Supplier;
 model.transaksi = Transaksi;
+model.barang = Barang;
 
 export default model;
