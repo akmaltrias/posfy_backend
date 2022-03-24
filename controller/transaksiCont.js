@@ -43,11 +43,11 @@ controller.createTransaksi = async function(req, res){
         
         console.log(data);
 
-        // let transaksi = await model.transaksi.create(data);
+        let transaksi = await model.transaksi.create(data);
 
-        // res.status(201).json({
-        //     message: "Berhasil menambahkan data transaksi"
-        // });
+        res.status(201).json({
+            message: "Berhasil menambahkan data transaksi"
+        });
     }catch (error) {
         res.status(404).json({
             message: error.message
