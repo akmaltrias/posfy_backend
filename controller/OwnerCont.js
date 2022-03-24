@@ -25,6 +25,30 @@ controller.getAllOwner = async function(req, res){
     }
 }
 
+controller.getOwnerDetail = async function(req, res){
+    try {
+        let owner = await model.owner.findOne({
+            where: {id_owner: req.params.id_owner}
+        });
+
+        if(owner){
+            res.status(200).json({
+                message: "Data Owner Ditemukan",
+                data: owner
+            });
+        }else{
+            res.status(200).json({
+                message: "Data Tidak Ada",
+                data: []
+            });
+        }
+    } catch (error) {
+        res.status(404).json({
+            message: error.message
+        });
+    }
+}
+
 controller.createOwner = async function(req, res){
     try{
         const data = {
