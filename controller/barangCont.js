@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import model from "../model/index.js";
 import bcrypt from "bcrypt";
+import db from '../config/database.js';
 
 const controller = {};
 
@@ -30,6 +31,30 @@ controller.getAllBarang = async function(req, res){
         })
     }
 }
+
+controller.getDetailBarang = async function(req, res){
+    try {
+        const [barang] = await db.query("SELECT * FROM view_barang_detail WHERE id_barang=(:id)", {
+            replacements: {id: req.params.id_barang}
+        });
+        if(barang){
+            res.status(200).json({
+                message: "Data List Barang Ditemukan",
+                data : barang
+            })
+        }else{
+            res.status(200).json({
+                message: "Data Tidak Ada",
+                data : []
+            })
+        }
+    } catch (error) {
+        res.status(404).json({
+            message: error.message
+        })
+    }
+}
+
 
 controller.getOneBarang = async function(req, res){
     try {

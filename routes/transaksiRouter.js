@@ -5,7 +5,9 @@ import controller from "../controller/index.js";
 const route = express.Router();
 const upload = multer()
 
-// route.get("/transaksi", upload.none() ,controller.transaksi.getTransaksi);
+route.get("/transaksi/detail", upload.none(),controller.transaksi.getDetailTransaksi);
+route.post("/transaksi/detail", upload.none(), controller.transaksi.createBulkDetTransaksi);
+
 route.get("/transaksi", upload.none(), controller.transaksi.getTransaksi);
 route.post("/transaksi", upload.none(), controller.transaksi.createTransaksi);
 
