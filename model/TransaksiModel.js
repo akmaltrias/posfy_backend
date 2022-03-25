@@ -9,6 +9,7 @@ const Transaksi = db.define('transaksi',
     //field
     id_transaksi:{
         type: DataTypes.STRING,
+        primaryKey: true
     },
     id_user:{
         type: DataTypes.UUID,
