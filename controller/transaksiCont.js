@@ -1,11 +1,7 @@
 import sequelize from "sequelize";
 import db from "../config/database.js";
 import model from "../model/index.js";
-<<<<<<< HEAD
 import moment from "moment-timezone"
-=======
-import moment from "moment";
->>>>>>> 28cd313676be80df13ba9f623c4199bdf7f7a114
 
 const controller = {};
 
