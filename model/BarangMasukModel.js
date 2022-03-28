@@ -9,6 +9,8 @@ const Barang_masuk = db.define('barang_masuk',
     //field
     id_barang_masuk:{
         type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true
     },
     id_supplier:{
         type: DataTypes.UUID,

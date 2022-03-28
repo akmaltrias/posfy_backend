@@ -18,6 +18,7 @@ import ownerRouter from "./routes/ownerRouter.js";
 import supplierRouter from "./routes/supplierRouter.js";
 import transaksiRouter from "./routes/transaksiRouter.js";
 import barangRouter from "./routes/barangRouter.js"
+import barangMasukRouter from "./routes/barangMasukRouter.js"
 
 dotenv.config();
 
@@ -51,5 +52,6 @@ app.use('/', ownerRouter);
 app.use('/', supplierRouter);
 app.use('/', transaksiRouter);
 app.use('/', barangRouter);
+app.use('/', barangMasukRouter);
 
 app.listen(port, () => console.log(`Server Running at ${port}`));

@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 import db from "../config/database.js";
-import Barang from "./BarangModel.js";
+import Barang_masuk from "./BarangMasukModel.js";
 
 const { DataTypes } = Sequelize;
 
@@ -11,7 +11,7 @@ const DetBarang_masuk = db.define('detail_barang_masuk',
         type: DataTypes.STRING,
     },
     id_barang_masuk:{
-        type: DataTypes.UUID,
+        type: DataTypes.STRING,
     },
     jumlah_masuk:{
         type: DataTypes.INTEGER,

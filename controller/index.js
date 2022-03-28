@@ -11,6 +11,7 @@ import refreshToken from "./refreshTokenCont.js";
 import supplierCont from "./supplierCont.js";
 import transaksiCont from "./transaksiCont.js";
 import barangCont from "./barangCont.js"
+import barangMasukCont from "./barangMasukCont.js"
 
 const controller = {};
 
@@ -27,5 +28,6 @@ controller.refreshToken = refreshToken;
 controller.supplier = supplierCont;
 controller.transaksi = transaksiCont;
 controller.barang = barangCont;
+controller.barangMasuk = barangMasukCont;
 
 export default controller;
