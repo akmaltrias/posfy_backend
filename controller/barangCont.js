@@ -37,6 +37,55 @@ controller.getDetailBarang = async function(req, res){
         const [barang] = await db.query("SELECT * FROM view_barang_detail WHERE id_barang=(:id)", {
             replacements: {id: req.params.id_barang}
         });
+
+        if(barang){
+            res.status(200).json({
+                message: "Data List Barang Ditemukan",
+                data : barang
+            })
+        }else{
+            res.status(200).json({
+                message: "Data Tidak Ada",
+                data : []
+            })
+        }
+    } catch (error) {
+        res.status(404).json({
+            message: error.message
+        })
+    }
+}
+
+
+controller.getOneBarang = async function(req, res){
+    try {
+        let barang = await model.barang.findOne({
+            where: {
+                id_barang: req.params.id_barang
+            }
+        });
+        if(barang){
+            res.status(200).json({
+                message: 'Data Barang Ditemukan',
+                data: barang
+            })
+            
+        }else{
+            res.status(200).json({
+                message: 'Tidak Ada Data',
+                data: []
+            })
+        }
+    } catch (error) {
+        res.status(404).json({
+            message: error.message
+        })
+    }
+}
+
+controller.getAllDetailBarang = async function(req, res){
+    try {
+        const [barang] = await db.query("SELECT * FROM view_barang_detail");
         if(barang){
             res.status(200).json({
                 message: "Data List Barang Ditemukan",

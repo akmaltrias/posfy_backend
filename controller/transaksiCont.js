@@ -7,8 +7,8 @@ const controller = {};
 
 controller.getTransaksi = async function(req, res){
     try {
-        const transaksi = await model.transaksi.findAll({
-            where: sequelize.where(sequelize.fn('date', sequelize.col('tgl_transaksi')), req.body.tgl_transaksi)
+        const [transaksi] = await db.query("SELECT * FROM riwayat_transaksi WHERE tgl_trans = (:tgl_transaksi)", {
+            replacements: {tgl_transaksi: req.body.tgl_transaksi}
         });
 
         if(transaksi.length > 0 ){
@@ -31,7 +31,7 @@ controller.getTransaksi = async function(req, res){
 
 controller.getDetailTransaksi = async function(req, res){
     try {
-        const [detTransaksi] = await db.query("SELECT * FROM detail_transaksi WHERE id_transaksi=(:id)", {
+        const [detTransaksi] = await db.query("SELECT * FROM view_detail_transaksi WHERE id_transaksi=(:id)", {
             replacements: {id: req.body.id_transaksi}
         });
 
