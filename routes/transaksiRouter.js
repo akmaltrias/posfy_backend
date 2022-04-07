@@ -11,4 +11,6 @@ route.post("/transaksi/detail", upload.none(), controller.transaksi.createBulkDe
 route.post("/transaksi", upload.none(), controller.transaksi.getTransaksi);
 route.post("/transaksi", upload.none(), controller.transaksi.createTransaksi);
 
+route.post("/transaksi/report", upload.none(), controller.transaksi.getLaporanTransaksi);
+
 export default route;
