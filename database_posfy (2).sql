@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2022 at 03:47 AM
+-- Generation Time: Apr 07, 2022 at 06:53 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -123,6 +123,7 @@ CREATE TABLE `barang` (
 
 INSERT INTO `barang` (`id_barang`, `id_user`, `nama_barang`, `harga_jual`) VALUES
 ('1926c005-989b-11ec-af56-14cb1973e3b2', '0470eb28-9886-11ec-af56-14cb1973e3b2', 'Fanta', 5000),
+('4da54480-5753-456e-9191-27c9ed2cc028', '0470eb28-9886-11ec-af56-14cb1973e3b2', 'Sari Gandum', 2000),
 ('7e3ccabc-9894-11ec-af56-14cb1973e3b2', '0470eb28-9886-11ec-af56-14cb1973e3b2', 'Frestea', 6000);
 
 -- --------------------------------------------------------
@@ -163,9 +164,9 @@ CREATE TABLE `detail_barang` (
 --
 
 INSERT INTO `detail_barang` (`kode_barang`, `id_barang`, `kadaluwarsa`, `stok`) VALUES
-('8992761122234', '1926c005-989b-11ec-af56-14cb1973e3b2', '2023-08-28', 5),
+('8992761122234', '1926c005-989b-11ec-af56-14cb1973e3b2', '2023-08-28', 0),
 ('8992761122347', '7e3ccabc-9894-11ec-af56-14cb1973e3b2', '2023-01-30', 0),
-('8992761122348', '7e3ccabc-9894-11ec-af56-14cb1973e3b2', '2023-02-28', 10),
+('8992761122348', '7e3ccabc-9894-11ec-af56-14cb1973e3b2', '2023-02-28', 8),
 ('8992761122349', '7e3ccabc-9894-11ec-af56-14cb1973e3b2', '2023-02-28', 20),
 ('8992761122350', '7e3ccabc-9894-11ec-af56-14cb1973e3b2', '2023-03-30', 20);
 
@@ -227,7 +228,11 @@ CREATE TABLE `detail_transaksi` (
 --
 
 INSERT INTO `detail_transaksi` (`id_transaksi`, `kode_barang`, `qty`, `harga_jual`, `total_beli`) VALUES
-('04/03/2022/0001', '8992761122348', 5, 6000, 30000);
+('04/03/2022/0001', '8992761122348', 5, 6000, 30000),
+('25/03/2022/0001', '8992761122348', 1, 6000, 6000),
+('25/03/2022/0001', '8992761122234', 2, 5000, 10000),
+('25/03/2022/0002', '8992761122348', 1, 6000, 6000),
+('25/03/2022/0002', '8992761122234', 3, 5000, 15000);
 
 --
 -- Triggers `detail_transaksi`
@@ -325,6 +330,19 @@ INSERT INTO `owner` (`id_owner`, `id_user`, `nama`, `no_telp`, `alamat`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `riwayat_transaksi`
+-- (See below for the actual view)
+--
+CREATE TABLE `riwayat_transaksi` (
+`id_transaksi` char(15)
+,`kasir` varchar(100)
+,`total_belanja` decimal(41,0)
+,`tgl_trans` varchar(10)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `siswa`
 --
 
@@ -362,7 +380,9 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`id_supplier`, `nama`, `no_telp`, `alamat`) VALUES
-('b81f2b64-9886-11ec-af56-14cb1973e3b2', 'Toko Budi Sejahtera', '085612345678', 'JL. Letnan Arsyad No. 52 RT04/24');
+('27bdc28f-6fc6-41df-8561-d7ab289232b7', 'Indogrosir Bekasi', '021-88863228', 'Jalan Baru Terusan I Gusti Ngurahrai\nRT 11/ RW 12\n(500 m Timur Stasiun Cakung)\nBintara, Bekasi Barat,\nBekasi 17134'),
+('b81f2b64-9886-11ec-af56-14cb1973e3b2', 'Toko Budi Sejahtera', '085612345678', 'JL. Letnan Arsyad No. 52 RT04/24'),
+('bd914eeb-df23-4513-9ac8-d06ba4623d21', 'Toko Amriya Bintara', '0812345678910', 'Jalan Griya Bintara Blok A No. 89 RT03/23');
 
 -- --------------------------------------------------------
 
@@ -381,7 +401,9 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `tgl_transaksi`) VALUES
-('04/03/2022/0001', '98d25baf-9885-11ec-af56-14cb1973e3b2', '2022-03-04 11:16:56');
+('04/03/2022/0001', '98d25baf-9885-11ec-af56-14cb1973e3b2', '2022-03-04 11:16:56'),
+('25/03/2022/0001', '47c7bea5-9886-11ec-af56-14cb1973e3b2', '2022-03-25 00:45:45'),
+('25/03/2022/0002', '47c7bea5-9886-11ec-af56-14cb1973e3b2', '2022-03-25 03:56:32');
 
 -- --------------------------------------------------------
 
@@ -404,30 +426,66 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id_user`, `id_level`, `username`, `password`, `status`) VALUES
 ('0470eb28-9886-11ec-af56-14cb1973e3b2', '62956bdb-9885-11ec-af56-14cb1973e3b2', 'smkn1kotabekasi', '$2y$10$GvbD30YPQoQEEKtCx5zPt.RFY6UQi9UCPuUh2Vhes5XThnEPNp1Gm', 1),
 ('47c7bea5-9886-11ec-af56-14cb1973e3b2', '5a2cb85e-9885-11ec-af56-14cb1973e3b2', 'admin', '$2b$10$P3zaL7e2Qgbt/axXv2kpmuvRh54tCZRu8fc0vN3PSXspEZ1.YRV4O', 1),
-('98d25baf-9885-11ec-af56-14cb1973e3b2', '5a2ca976-9885-11ec-af56-14cb1973e3b2', 'fatimatulayundamantul', '$2y$10$0zZzVUP80lRnMrRSASoSvOmfHbeGTW6qDe/nxL.REht56sZaiVzO6', 1);
+('98d25baf-9885-11ec-af56-14cb1973e3b2', '5a2ca976-9885-11ec-af56-14cb1973e3b2', 'fatimatulayundamantul', '$2y$10$0zZzVUP80lRnMrRSASoSvOmfHbeGTW6qDe/nxL.REht56sZaiVzO6', 1),
+('b80ae469-de88-4a92-9642-557e375e5086', '5a2ca976-9885-11ec-af56-14cb1973e3b2', 'haloakmal', '$2b$10$2h6V4AKA/hQDrrbrzeSV7uufbat8b42n9Ip4v6vZPCoeZv/UcCfZ6', 1);
 
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `view_detail_barang`
+-- Stand-in structure for view `view_barang_detail`
 -- (See below for the actual view)
 --
-CREATE TABLE `view_detail_barang` (
+CREATE TABLE `view_barang_detail` (
 `id_barang` char(36)
-,`owner` varchar(100)
 ,`nama_barang` varchar(100)
-,`kode_barang` char(13)
+,`kadaluwarsa` date
 ,`stok` int(10)
+,`kode_barang` char(13)
+,`harga_jual` bigint(10)
+,`id_user` char(36)
+,`nama_owner` varchar(100)
 );
 
 -- --------------------------------------------------------
 
 --
--- Structure for view `view_detail_barang`
+-- Stand-in structure for view `view_detail_transaksi`
+-- (See below for the actual view)
 --
-DROP TABLE IF EXISTS `view_detail_barang`;
+CREATE TABLE `view_detail_transaksi` (
+`id_transaksi` char(15)
+,`kode_barang` char(13)
+,`qty` int(5)
+,`harga_jual` bigint(10)
+,`nama_barang` varchar(100)
+);
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_detail_barang`  AS SELECT `b`.`id_barang` AS `id_barang`, `own`.`nama` AS `owner`, `b`.`nama_barang` AS `nama_barang`, `detail_barang`.`kode_barang` AS `kode_barang`, `detail_barang`.`stok` AS `stok` FROM ((`detail_barang` join `barang` `b` on(`b`.`id_barang` = `detail_barang`.`id_barang`)) join `owner` `own` on(`own`.`id_user` = `b`.`id_user`)) ;
+-- --------------------------------------------------------
+
+--
+-- Structure for view `riwayat_transaksi`
+--
+DROP TABLE IF EXISTS `riwayat_transaksi`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `riwayat_transaksi`  AS SELECT `t`.`id_transaksi` AS `id_transaksi`, `u`.`username` AS `kasir`, sum(`dtrans`.`total_beli`) AS `total_belanja`, date_format(`t`.`tgl_transaksi`,'%d/%m/%Y') AS `tgl_trans` FROM ((`transaksi` `t` join `user` `u` on(`u`.`id_user` = `t`.`id_user`)) join `detail_transaksi` `dtrans` on(`dtrans`.`id_transaksi` = `t`.`id_transaksi`)) GROUP BY `t`.`id_transaksi` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_barang_detail`
+--
+DROP TABLE IF EXISTS `view_barang_detail`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_barang_detail`  AS SELECT `bar`.`id_barang` AS `id_barang`, `bar`.`nama_barang` AS `nama_barang`, `detbarang`.`kadaluwarsa` AS `kadaluwarsa`, `detbarang`.`stok` AS `stok`, `detbarang`.`kode_barang` AS `kode_barang`, `bar`.`harga_jual` AS `harga_jual`, `bar`.`id_user` AS `id_user`, `ow`.`nama` AS `nama_owner` FROM ((`detail_barang` `detbarang` join `barang` `bar` on(`detbarang`.`id_barang` = `bar`.`id_barang`)) join `owner` `ow` on(`bar`.`id_user` = `ow`.`id_user`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_detail_transaksi`
+--
+DROP TABLE IF EXISTS `view_detail_transaksi`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_detail_transaksi`  AS SELECT `dt`.`id_transaksi` AS `id_transaksi`, `dt`.`kode_barang` AS `kode_barang`, `dt`.`qty` AS `qty`, `dt`.`harga_jual` AS `harga_jual`, `b`.`nama_barang` AS `nama_barang` FROM ((`detail_transaksi` `dt` join `detail_barang` `db` on(`db`.`kode_barang` = `dt`.`kode_barang`)) join `barang` `b` on(`b`.`id_barang` = `db`.`id_barang`)) ;
 
 --
 -- Indexes for dumped tables
@@ -569,7 +627,7 @@ ALTER TABLE `detail_barang`
 --
 ALTER TABLE `detail_barang_masuk`
   ADD CONSTRAINT `detail_barang_masuk_ibfk_1` FOREIGN KEY (`id_barang_masuk`) REFERENCES `barang_masuk` (`id_barang_masuk`),
-  ADD CONSTRAINT `detail_barang_masuk_ibfk_2` FOREIGN KEY (`kode_barang`) REFERENCES `detail_barang` (`kode_barang`);
+  ADD CONSTRAINT `detail_barang_masuk_ibfk_2` FOREIGN KEY (`kode_barang`) REFERENCES `detail_barang` (`kode_barang`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `detail_transaksi`
