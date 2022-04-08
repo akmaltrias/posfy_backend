@@ -10,6 +10,8 @@ import Supplier from "./SupplierModel.js";
 import Transaksi from "./TransaksiModel.js";
 import DetTransaksi from "./DetTransaksiModel.js";
 import Barang from "./BarangModel.js";
+import Barang_masuk from "./BarangMasukModel.js";
+import DetBarang_masuk from "./DetBarangMasukModel.js";
 
 const model = {};
 
@@ -25,5 +27,7 @@ model.supplier = Supplier;
 model.transaksi = Transaksi;
 model.detTransaksi = DetTransaksi;
 model.barang = Barang;
+model.barang_masuk = Barang_masuk;
+model.detBarang_masuk = DetBarang_masuk;
 
 export default model;

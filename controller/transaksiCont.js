@@ -57,7 +57,7 @@ controller.createTransaksi = async function (req, res) {
   try {
     const [result] = await db.query('SELECT id_transaksi() as id');
 
-    //    console.log(result[0].id)
+    const tanggal = moment().format();
 
     const data = {
       id_transaksi: result[0].id,
