@@ -94,4 +94,31 @@ controller.createBulkDetTransaksi = async function (req, res) {
   }
 };
 
+controller.getLaporanTransaksi = async function (req, res) {
+  try {
+    const [transaksi] = await db.query(
+      "SELECT a.nama_barang, SUM( c.qty ) AS qty, SUM( c.total_beli ) AS laba_kotor, ( SUM( c.total_beli )- SUM( e.harga_beli * c.qty )) AS laba_bersih FROM barang a JOIN detail_barang b ON a.id_barang = b.id_barang RIGHT JOIN ( SELECT kode_barang, harga_beli FROM `detail_barang_masuk` GROUP BY kode_barang ) AS e ON e.kode_barang = b.kode_barang RIGHT JOIN detail_transaksi c ON b.kode_barang = c.kode_barang JOIN transaksi d ON c.id_transaksi = d.id_transaksi WHERE DATE_FORMAT( DATE( d.tgl_transaksi ), '%d/%m/%Y' ) = (:tgl_transaksi) GROUP BY a.id_barang",
+      {
+        replacements: { tgl_transaksi: req.body.tgl_transaksi },
+      }
+    );
+
+    if (transaksi.length > 0) {
+      res.status(200).json({
+        message: 'Data Laporan Ditemukan',
+        data: transaksi,
+      });
+    } else {
+      res.status(200).json({
+        message: 'Data Tidak Ada',
+        data: [],
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      message: error.message,
+    });
+  }
+};
+
 export default controller;

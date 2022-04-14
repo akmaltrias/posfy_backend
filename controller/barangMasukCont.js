@@ -86,10 +86,12 @@ controller.createBulkDetBarangMasuk = async function(req, res){
         const x = req.body
         // console.log(data);
 
+        // console.log(x);
+
         const data = x.map(v => {
-            // console.log(v.kode_barang);
-            const [ins_detBarangMasuk] = db.query("CALL ins_barang_masuk (:kode_barang, :id_barang, :id_barang_masuk, :kadaluwarsa, :harga_beli, :jumlah_masuk)", {
+        db.query("CALL ins_barang_masuk (:kode_barang, :id_barang, :id_barang_masuk, :kadaluwarsa, :harga_beli, :jumlah_masuk)", {
                 replacements: {
+            // console.log(v.kode_barang);
                     kode_barang: v.kode_barang,
                     id_barang: v.id_barang,
                     id_barang_masuk: v.id_barang_masuk,
@@ -101,10 +103,10 @@ controller.createBulkDetBarangMasuk = async function(req, res){
         });
 
 
-        if(ins_detBarangMasuk.length > 0 ){
+        if(data.length > 0 ){
             res.status(200).json({
                 message: "Berhasil menambahkan seluruh barang masuk",
-                data : detBarang_masuk
+                data : x
             })
         }else{
             res.status(200).json({
