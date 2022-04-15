@@ -72,7 +72,8 @@ controller.createBarangMasuk = async function(req, res){
         let barang_masuk = await model.barang_masuk.create(data);
 
         res.status(201).json({
-            message: "Berhasil menambahkan data barang masuk"
+            message: "Berhasil menambahkan data barang masuk",
+            id_barang_masuk : data.id_barang_masuk
         });
     }catch (error) {
         res.status(404).json({
