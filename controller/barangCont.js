@@ -86,7 +86,7 @@ controller.getOneBarang = async function(req, res){
 controller.getAllDetailBarang = async function(req, res){
     try {
         const [barang] = await db.query("SELECT * FROM view_barang_detail WHERE stok != 0");
-        if(barang > 0){
+        if(barang){
             res.status(200).json({
                 message: "Data List Barang Ditemukan",
                 data : barang
